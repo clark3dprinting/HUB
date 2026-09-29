@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hub Bar</title>
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAElklEQVR4nMRXv4/VRRCf2e8XDQUXDZqQcHpng/oSiSj4g57Egt7S5qCA0sZ/AGNjh1cAFxMtLGw0XoLRROPZa9R4FBTw3kGAwPHjGiju7TCzO7s7u++9o4Pvy779fnfnuzvzmZnPztfBM776duDQWVroxv6UQ3fceRo4Akit43n03KcxfmYZ7jH0eT6Ml/kO3Dr48Wrvt5dXzuwe2v3QPrx9lpa6MZ0PC9CsRkEBJKPITDkMfRlD4ueT5z7vL6Q9Xbp5lzfvCXhzjBYFizFb3uU+zqc+z080jAiIrN7zOHI7f/qz7aUKAYGdIbvSEeGkZWJBbcmTLd95Xnra3l786svdw4CA+Fw2l426xudhTC3vQOeN5bMQaiyvkJH2vOtPZRc44IAz2qUmARXGvPicYsAR5D7Oxx5VziU5buj1XV9kXRojOJ6zgF8aJJ/LQjkIuX/nVYS35mUcg79k/vZ9gLV/SX0c25E3HOzdE9ERNyIQbFwDuDoycpRiIvh+YBRQSwICFDfj/hBv/sXHVaKksIGX9xD8sBbfOXYY4aMPVI6SBP+/D/Dt92MYDtPaaZ/YFxe0Pqfoy4Pz7eblOrjoss8PvIKNerGXtrgfTVakmIhjUxAocYDaGqowV/E5sBLF8gYvEzORmKJ7JCayAtbnIeX0GWE2AhisiSyYrAWYVEKes+Vhj6JMViBFMRr/uCcggFCyQmLGIhPekfUaBLBpAKrIrDyXaJ913bxT2G7zHhgUMCMk/1sPKPu8bRmBnOcNW/3xD3G0S8BhsAzDj8Lm3636nNsXf/PcO3jpRbVOFx9dJbik6Yp6OKE5pIoCYH1Pall88cc/CX5ao0qxLmdNlIMxK/Grr6g6UXqX1zaBqCgbBBoGDPFQ+MBNiQ2cIWdlW7l0bKdsMAigWq6aG0SOHXac55DTTObF5z//7vlAie/uYsGj7zl4YS66yJG66jrB+t+UT8XMhMqUEwjUmhMced1NYTiA1+Yh+PziLz7IHf3QwZsHsAo/4YZ9+xAebXkYXaaqcMEWgQ6g4vWk8d450CXLle4l4JJctLzMpxST+7k5qCwvSBgEIg8Uy208ALU8kPLcIhfH0sZglbAnatpL+xqBlgkVzEmGi3fZrzuwYRrrNCa6JhsaBCYrn6lMSJTVSpYFOBSpAn+UcxWqVHhgggmhruFkbOM6VJYB5BALJNNptXSrkUOD3t0byrJUqqvs3oIATc3zK0OCb/g8X9ivlqiFW/eZ4f4rmfP/X56jXQIOs49lbvMGweaGZUKtkjQbsgI91+0IfmD5IMXBaARwbUjQlttt5owu10yJVq5hQGXR9ewC+WgIZ7up9YLGHrSuSydfqQ9tPWjrxJDnpj7M89U5IzHjV7MCve+XE7fb08qBrWQwW1Q43maQVlJGrvV5jgP+QOGb5azAyhkcssAJrCpZY7mpcnFalauVcESGDEK6XoVM8P3JpZX4iVblmHyxsPA51gpbn7clu23W5zvJyVwPeOKTr5+7ACZjquv0pw8XdvFHAy8q3woDW8vVH5/N6ZYU8VDBHj9OOeDE5wx7snymAk/7egwAAP//OpKtXwAAAAZJREFUAwCu4/3cngVqrgAAAABJRU5ErkJggg==">
+<style>
+  :root {
+    color-scheme: light dark;
+    --text: #1d1d1f; --sub: #6e6e73; --card: rgba(255,255,255,.72); --field: rgba(0,0,0,.05);
+    --line: rgba(0,0,0,.07); --accent: #0071e3;
+    --bg: radial-gradient(1200px 600px at 15% -10%, #dfe9ff 0%, transparent 60%),
+          radial-gradient(900px 500px at 100% 0%, #f1e4ff 0%, transparent 55%), #f5f5f7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text: #f5f5f7; --sub: #98989d; --card: rgba(28,28,30,.72); --field: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.08); --accent: #2997ff;
+      --bg: radial-gradient(1200px 600px at 15% -10%, #16264a 0%, transparent 60%),
+            radial-gradient(900px 500px at 100% 0%, #2a1a45 0%, transparent 55%), #000;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); background-attachment: fixed; color: var(--text);
+    font: 16px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    display: flex; justify-content: center; padding: 110px 20px 60px;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { width: 100%; max-width: 560px; }
+
+  .pointer { text-align: center; color: var(--sub); font-size: 13px; margin: -52px 0 36px; cursor: default; }
+  header { text-align: center; }
+  h1 { font-size: 44px; letter-spacing: -.03em; line-height: 1.1; margin: 0; }
+  header p { color: var(--sub); font-size: 19px; margin: 10px 0 0; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 26px;
+    margin-top: 32px; backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 10px 40px rgba(0,0,0,.06);
+  }
+  .step { display: flex; gap: 14px; align-items: flex-start; }
+  .step + .step { margin-top: 22px; }
+  .n {
+    width: 28px; height: 28px; border-radius: 50%; flex: none; display: grid; place-items: center;
+    background: linear-gradient(135deg, #4f8cff, #9b5cff); color: #fff; font-weight: 600; font-size: 14px;
+  }
+  .step h2 { font-size: 18px; margin: 1px 0 0; font-weight: 600; }
+  .step p { margin: 4px 0 0; color: var(--sub); }
+  kbd {
+    font: 600 13px -apple-system, system-ui, sans-serif; color: var(--text); background: var(--field);
+    border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 7px; padding: 1px 7px;
+  }
+
+  .drag {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; height: 46px; padding: 0 22px;
+    border-radius: 14px; text-decoration: none; color: #fff; font-weight: 600; font-size: 16px; cursor: grab;
+    background: linear-gradient(135deg, #4f8cff, #9b5cff); box-shadow: 0 8px 24px rgba(99,110,255,.35);
+    animation: nudge 2.8s ease-in-out infinite;
+  }
+  .drag:active { cursor: grabbing; }
+  @keyframes nudge { 0%, 80%, 100% { transform: translateY(0); } 88% { transform: translateY(-5px); } }
+
+  .done { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--sub); text-align: center; }
+  .done b { color: var(--text); }
+
+  details { margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 0 18px; }
+  details:first-of-type { margin-top: 20px; }
+  summary {
+    list-style: none; cursor: pointer; padding: 14px 0; font-weight: 500; display: flex; align-items: center; gap: 10px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "›"; margin-left: auto; color: var(--sub); font-size: 20px; transition: transform .2s; }
+  details[open] summary::after { transform: rotate(90deg); }
+  summary small { color: var(--sub); font-weight: 400; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .body { padding: 0 0 16px; color: var(--sub); }
+  .body ol { margin: 0; padding-left: 20px; }
+  .body li + li { margin-top: 6px; }
+  .body b { color: var(--text); font-weight: 600; }
+
+  .btn {
+    height: 36px; padding: 0 14px; border-radius: 10px; border: none; background: var(--field); color: var(--text);
+    font: 500 14px -apple-system, system-ui, sans-serif; cursor: pointer;
+  }
+  .btn:active { transform: scale(.97); }
+  input {
+    width: 100%; height: 42px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line);
+    background: var(--field); color: var(--text); font: inherit; outline: none;
+  }
+  input:focus { border-color: var(--accent); }
+
+  .keys { display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; align-items: center; }
+  .keys div:nth-child(odd) { white-space: nowrap; color: var(--text); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); opacity: 0;
+    background: rgba(29,29,31,.92); color: #fff; padding: 10px 18px; border-radius: 999px; font-size: 14px;
+    transition: .25s; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+</style>
+</head>
+<body>
+<main>
+  <div class="pointer" id="pointer">↑ This is the Hub Bar — try it</div>
+
+  <header>
+    <h1>Hub Bar</h1>
+    <p>Your back, refresh, full screen, brightness<br>and sound buttons — on any website.</p>
+  </header>
+
+  <section class="card">
+    <div class="step">
+      <span class="n">1</span>
+      <div>
+        <h2>Show your bookmarks bar</h2>
+        <p>Press <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>B</kbd></p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="n">2</span>
+      <div>
+        <h2>Drag this onto it</h2>
+        <a class="drag" id="barLink" title="Drag me to your bookmarks bar">⌂ Hub Bar</a>
+      </div>
+    </div>
+    <div class="done">That’s it. On any website, click <b>Hub Bar</b> in your bookmarks bar.</div>
+  </section>
+
+  <details>
+    <summary>Dragging doesn’t work?</summary>
+    <div class="body">
+      <ol>
+        <li><button class="btn" id="copyBtn">Copy Bookmark Code</button></li>
+        <li>Press <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>O</kbd>, click <b>⋮</b> at the top right, then <b>Add new bookmark</b>.</li>
+        <li>Name it <b>Hub Bar</b>, paste into <b>URL</b>, and click <b>Save</b>.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>Bookmarks blocked?</summary>
+    <div class="body">
+      <div class="keys">
+        <div><kbd>Alt</kbd> <kbd>←</kbd></div><div>Back (or swipe two fingers)</div>
+        <div><kbd>Alt</kbd> <kbd>→</kbd></div><div>Forward</div>
+        <div><kbd>Ctrl</kbd> <kbd>R</kbd></div><div>Refresh</div>
+        <div><b>⋮</b> menu</div><div>Full screen — the square next to Zoom</div>
+        <div>Hold <kbd>Esc</kbd></div><div>Get out of a full-screen game and get your mouse back</div>
+        <div><kbd>Alt</kbd> <kbd>Shift</kbd> <kbd>S</kbd></div><div>The Chromebook’s real brightness and volume</div>
+      </div>
+    </div>
+  </details>
+
+  <details>
+    <summary>Home button <small id="hubShow"></small></summary>
+    <div class="body">
+      <p style="margin:0 0 10px">The ⌂ button takes you to Google. To send it somewhere else, type the address here, then drag the bookmark again.</p>
+      <input id="hubUrl" type="url" placeholder="https://www.google.com" spellcheck="false">
+    </div>
+  </details>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+// Hub Bar: a bookmarklet that floats Home, Back, Forward, Refresh, Full Screen,
+// brightness and volume controls on top of any site.
+// hubBar runs on other sites, so it must be self-contained. It builds everything with
+// DOM calls (no innerHTML) because sites like Google enforce Trusted Types.
+function hubBar(HUB) {
+  var old = document.getElementById("__hub_bar");
+  if (old) { if (old.__close) old.__close(); old.remove(); return; }
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem("__hub_bar") || "{}"); } catch (e) {}
+  var state = { bri: saved.bri || 100, vol: saved.vol == null ? 100 : saved.vol, muted: !!saved.muted, sound: !!saved.sound };
+  function save() { try { localStorage.setItem("__hub_bar", JSON.stringify(state)); } catch (e) {} }
+
+  function pinned(el) {
+    return function (k, v) { el.style.setProperty(k, v, "important"); };
+  }
+
+  // Page brightness: a see-through layer over the page that can't be clicked.
+  var dim = document.getElementById("__hub_bar_dim");
+  if (!dim) {
+    dim = document.createElement("div");
+    dim.id = "__hub_bar_dim";
+    var d = pinned(dim);
+    d("all", "initial"); d("position", "fixed"); d("inset", "0"); d("pointer-events", "none");
+    d("z-index", "2147483646"); d("display", "none");
+    document.documentElement.appendChild(dim);
+  }
+  function applyBri() {
+    var d = pinned(dim);
+    d("display", state.bri === 100 ? "none" : "block");
+    d("backdrop-filter", "brightness(" + state.bri / 100 + ")");
+    d("-webkit-backdrop-filter", "brightness(" + state.bri / 100 + ")");
+  }
+
+  // Volume: every video and audio element on the page, including same-site frames.
+  function allMedia() {
+    var list = [].slice.call(document.querySelectorAll("video,audio"));
+    for (var i = 0; i < frames.length; i++) {
+      try { list = list.concat([].slice.call(frames[i].document.querySelectorAll("video,audio"))); } catch (e) {}
+    }
+    return list;
+  }
+  function setMedia(m) { m.volume = state.vol / 100; m.muted = state.muted || state.vol === 0; }
+  function applyVol() { var m = allMedia(); if (state.sound) m.forEach(setMedia); return m.length; }
+  if (!window.__hubBarPlay) {
+    window.__hubBarPlay = true;
+    document.addEventListener("play", function (e) {
+      var s = window.__hubBarState;
+      if (s && s.sound && e.target && "volume" in e.target) { e.target.volume = s.vol / 100; e.target.muted = s.muted || s.vol === 0; }
+    }, true);
+  }
+  window.__hubBarState = state;
+  applyBri();
+  applyVol();
+
+  var host = document.createElement("div");
+  host.id = "__hub_bar";
+  var pin = pinned(host);
+  pin("all", "initial");
+  pin("display", "block");
+  pin("position", "fixed");
+  pin("z-index", "2147483647");
+  pin("top", "10px");
+  pin("left", "50%");
+  pin("transform", "translateX(-50%)");
+  var root = host.attachShadow({ mode: "closed" });
+  var css =
+    ".wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;font:13px -apple-system,system-ui,sans-serif;color:#1d1d1f}" +
+    ".bar,.panel,.msg{background:rgba(255,255,255,.82);border:1px solid rgba(0,0,0,.08);box-shadow:0 8px 30px rgba(0,0,0,.18);" +
+    "backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%)}" +
+    ".bar{display:flex;align-items:center;gap:2px;padding:4px;border-radius:999px;touch-action:none;cursor:grab;user-select:none}" +
+    ".bar.dragging{cursor:grabbing}" +
+    ".panel{display:none;flex-direction:column;gap:10px;padding:12px 14px;border-radius:18px;width:270px}" +
+    ".panel.open{display:flex}" +
+    ".label{font-weight:600;font-size:12px;opacity:.6;margin-bottom:-6px}" +
+    ".row{display:flex;align-items:center;gap:10px}" +
+    ".row span{width:38px;text-align:right;font-variant-numeric:tabular-nums;opacity:.7}" +
+    ".hint{font-size:12px;line-height:1.4;opacity:.75;text-align:center;border-top:1px solid rgba(128,128,128,.25);padding-top:10px}" +
+    "kbd{font:600 11px -apple-system,system-ui,sans-serif;border:1px solid rgba(128,128,128,.4);border-bottom-width:2px;border-radius:5px;padding:0 5px}" +
+    ".msg{position:absolute;top:50px;left:50%;white-space:nowrap;padding:6px 12px;border-radius:999px;font-weight:500;" +
+    "opacity:0;transform:translate(-50%,-4px);transition:.2s;pointer-events:none;z-index:1}" +
+    ".msg.show{opacity:1;transform:translate(-50%,0)}" +
+    "input{flex:1;accent-color:#7a6cff;margin:0;cursor:pointer}" +
+    "button{all:unset;box-sizing:border-box;width:34px;height:34px;border-radius:50%;display:grid;" +
+    "place-items:center;cursor:pointer;color:inherit;flex:none}" +
+    ".row button{width:28px;height:28px}" +
+    "button:hover,button.on{background:rgba(0,0,0,.07)}button:active{transform:scale(.9)}" +
+    ".grip{width:24px;cursor:grab;opacity:.55}.grip:hover{background:none;opacity:.9}" +
+    ".home{background:linear-gradient(135deg,#4f8cff,#9b5cff)!important;color:#fff}" +
+    ".exit{background:#ff3b30!important;color:#fff}" +
+    ".spin svg{animation:spin .6s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}" +
+    "svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}" +
+    ".grip svg{stroke-width:3}" +
+    "@media (prefers-color-scheme:dark){.wrap{color:#f5f5f7}.bar,.panel,.msg{background:rgba(40,40,44,.84);border-color:rgba(255,255,255,.12)}" +
+    "button:hover,button.on{background:rgba(255,255,255,.12)}}";
+  try {
+    var sheet = new CSSStyleSheet();
+    sheet.replaceSync(css);
+    root.adoptedStyleSheets = [sheet];
+  } catch (e) {
+    var st = document.createElement("style");
+    st.textContent = css;
+    root.appendChild(st);
+  }
+
+  var SVG = "http://www.w3.org/2000/svg";
+  function icon(d) {
+    var svg = document.createElementNS(SVG, "svg");
+    svg.setAttribute("viewBox", "0 0 24 24");
+    var p = document.createElementNS(SVG, "path");
+    p.setAttribute("d", d);
+    svg.appendChild(p);
+    return svg;
+  }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+  function btn(parent, title, d, fn, cls) {
+    var b = el("button", cls);
+    b.title = title;
+    b.setAttribute("aria-label", title);
+    b.appendChild(icon(d));
+    if (fn) b.addEventListener("click", function (e) { e.stopPropagation(); if (!dragged) fn(b); });
+    parent.appendChild(b);
+    return b;
+  }
+  var FS_ON = "M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5";
+  var FS_OFF = "M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5";
+  var SUN = "M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4";
+  var SPEAKER = "M4 9.5h3.5L12 5.5v13l-4.5-4H4zM15.5 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10";
+  var MUTED = "M4 9.5h3.5L12 5.5v13l-4.5-4H4zM16 9.5l5 5M21 9.5l-5 5";
+
+  var wrap = el("div", "wrap");
+  var bar = el("div", "bar");
+  var panel = el("div", "panel");
+  var msg = el("div", "msg");
+  var msgTimer;
+  function say(text) {
+    msg.textContent = text;
+    msg.classList.add("show");
+    clearTimeout(msgTimer);
+    msgTimer = setTimeout(function () { msg.classList.remove("show"); }, 2200);
+  }
+
+  // history.back/forward do nothing when there's no page to go to, so say so.
+  function go(step, none) {
+    var href = location.href, left = false;
+    var onLeave = function () { left = true; };
+    addEventListener("pagehide", onLeave, { once: true });
+    addEventListener("popstate", onLeave, { once: true });
+    history.go(step);
+    setTimeout(function () {
+      removeEventListener("pagehide", onLeave);
+      removeEventListener("popstate", onLeave);
+      if (!left && location.href === href) say(none);
+    }, 700);
+  }
+
+  var grip = btn(bar, "Drag to move", "M9 7h.01M9 12h.01M9 17h.01M15 7h.01M15 12h.01M15 17h.01", null, "grip");
+  if (HUB) btn(bar, "Home", "M3.5 11 12 4l8.5 7M6 9.5V20h4.5v-5.5h3V20H18V9.5", function () { leaveFullscreen(); say("Going home…"); location.href = HUB; }, "home");
+  btn(bar, "Back", "M15 5l-7 7 7 7", function () { go(-1, "No page to go back to"); });
+  btn(bar, "Forward", "M9 5l7 7-7 7", function () { go(1, "No page to go forward to"); });
+  btn(bar, "Refresh", "M19.5 12a7.5 7.5 0 1 1-2.2-5.3M19.5 4.5v4.5H15", function (b) {
+    b.classList.add("spin");
+    say("Refreshing…");
+    setTimeout(function () { location.reload(); }, 250);
+  });
+  var fsBtn = btn(bar, "Full screen", FS_ON, function () {
+    if (fsElement()) leaveFullscreen();
+    else { var e = document.documentElement; (e.requestFullscreen || e.webkitRequestFullscreen).call(e); }
+  });
+  btn(bar, "Brightness and sound", "M4 7h10M18 7h2M4 17h2M10 17h10M16 5v4M8 15v4", function (b) {
+    panel.classList.toggle("open");
+    b.classList.toggle("on", panel.classList.contains("open"));
+  });
+  btn(bar, "Hide Hub Bar", "M7 7l10 10M17 7 7 17", function () { closeBar(); });
+
+  function slider(label, ico, title, min, max, val, onInput) {
+    panel.appendChild(el("div", "label", label));
+    var row = el("div", "row");
+    var b = btn(row, title, ico, null);
+    var input = el("input");
+    input.type = "range";
+    input.min = min; input.max = max; input.step = 5; input.value = val;
+    input.setAttribute("aria-label", label);
+    var num = el("span", null, val + "%");
+    input.addEventListener("input", function () { num.textContent = input.value + "%"; onInput(Number(input.value)); save(); });
+    row.append(b, input, num);
+    panel.appendChild(row);
+    return { btn: b, input: input, num: num };
+  }
+  var briRow = slider("Page brightness", SUN, "Reset brightness", 30, 150, state.bri, function (v) { state.bri = v; applyBri(); });
+  briRow.btn.addEventListener("click", function () { state.bri = 100; briRow.input.value = 100; briRow.num.textContent = "100%"; applyBri(); save(); });
+  var noMediaSaid = false;
+  function volChanged() {
+    setVolIcon();
+    var n = applyVol();
+    save();
+    if (!n && !noMediaSaid) { noMediaSaid = true; say("No video or music on this page yet"); }
+  }
+  var volRow = slider("Video & music volume", state.muted ? MUTED : SPEAKER, "Mute", 0, 100, state.vol, function (v) {
+    state.vol = v; state.sound = true; state.muted = false; volChanged();
+  });
+  function setVolIcon() {
+    volRow.btn.replaceChildren(icon(state.muted || state.vol === 0 ? MUTED : SPEAKER));
+    volRow.btn.title = state.muted ? "Unmute" : "Mute";
+  }
+  volRow.btn.addEventListener("click", function () { state.muted = !state.muted; state.sound = true; volChanged(); });
+  setVolIcon();
+  var hint = el("div", "hint");
+  hint.append("Whole screen brightness and volume: press ");
+  ["Alt", "Shift", "S"].forEach(function (k, i) { if (i) hint.append(" "); hint.appendChild(el("kbd", null, k)); });
+  panel.appendChild(hint);
+
+  // Drag from the dots or any empty part of the bar. A short move still counts as a click.
+  var dragged = false;
+  bar.addEventListener("pointerdown", function (e) {
+    if (e.button !== 0) return;
+    var onGrip = e.target === grip || grip.contains(e.target);
+    if (!onGrip && e.target !== bar) { dragged = false; return; }
+    e.preventDefault();
+    var r = host.getBoundingClientRect(), sx = e.clientX, sy = e.clientY;
+    dragged = false;
+    function move(ev) {
+      if (!dragged && Math.abs(ev.clientX - sx) + Math.abs(ev.clientY - sy) < 4) return;
+      dragged = true;
+      bar.classList.add("dragging");
+      pin("transform", "none");
+      pin("left", Math.max(0, Math.min(innerWidth - r.width, r.left + ev.clientX - sx)) + "px");
+      pin("top", Math.max(0, Math.min(innerHeight - 50, r.top + ev.clientY - sy)) + "px");
+    }
+    function up() {
+      removeEventListener("pointermove", move, true);
+      removeEventListener("pointerup", up, true);
+      removeEventListener("pointercancel", up, true);
+      bar.classList.remove("dragging");
+      setTimeout(function () { dragged = false; }, 0);
+    }
+    addEventListener("pointermove", move, true);
+    addEventListener("pointerup", up, true);
+    addEventListener("pointercancel", up, true);
+  });
+
+  // Full screen: games like Xbox Cloud Gaming and GeForce NOW put one element in full
+  // screen and hide everything else, so move the bar inside that element to keep it
+  // visible, and turn the full screen button into an exit button.
+  function fsElement() { return document.fullscreenElement || document.webkitFullscreenElement; }
+  function leaveFullscreen() {
+    try { if (document.pointerLockElement) document.exitPointerLock(); } catch (e) {}
+    try { if (navigator.keyboard && navigator.keyboard.unlock) navigator.keyboard.unlock(); } catch (e) {}
+    if (fsElement()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+  }
+  var alive = true;
+  host.__close = function () { alive = false; };
+  function closeBar() { alive = false; host.remove(); }
+  function placeBar() {
+    if (!alive) return;
+    var fs = fsElement();
+    var canHold = fs && fs !== document.documentElement && !/^(VIDEO|CANVAS|IFRAME|IMG)$/.test(fs.tagName);
+    var parent = canHold ? fs : document.documentElement;
+    if (host.parentNode !== parent) parent.appendChild(host);
+    wrap.classList.toggle("fs", !!fs);
+    fsBtn.replaceChildren(icon(fs ? FS_OFF : FS_ON));
+    fsBtn.title = fs ? "Exit full screen" : "Full screen";
+    fsBtn.classList.toggle("exit", !!fs);
+    if (fs && !placeBar.told) { placeBar.told = true; say("Click the red button to exit full screen"); }
+  }
+  document.addEventListener("fullscreenchange", placeBar);
+  document.addEventListener("webkitfullscreenchange", placeBar);
+
+  wrap.append(bar, msg, panel);
+  root.appendChild(wrap);
+  document.documentElement.appendChild(host);
+  placeBar();
+}
+
+function hubBarCode(hubUrl) {
+  return "javascript:" + encodeURIComponent("(" + hubBar.toString() + ")(" + JSON.stringify(hubUrl || "") + ");void 0");
+}
+</script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var input = $("hubUrl");
+
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast.t);
+    toast.t = setTimeout(function () { t.classList.remove("show"); }, 2600);
+  }
+  function hubUrl() {
+    var v = input.value.trim() || "https://www.google.com";
+    if (!/^https?:\/\//i.test(v)) v = "https://" + v;
+    return v;
+  }
+  function update() {
+    var url = hubUrl();
+    $("barLink").href = hubBarCode(url);
+    $("hubShow").textContent = "· " + url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+    try { localStorage.setItem("hubbar-home", input.value.trim()); } catch (e) {}
+  }
+
+  try { input.value = localStorage.getItem("hubbar-home") || ""; } catch (e) {}
+  input.addEventListener("input", update);
+  update();
+  hubBar(hubUrl());
+  $("pointer").onclick = function () { if (!document.getElementById("__hub_bar")) hubBar(hubUrl()); };
+
+  $("barLink").addEventListener("click", function (e) {
+    e.preventDefault();
+    toast("Drag it up onto your bookmarks bar");
+  });
+  $("copyBtn").onclick = function () {
+    var code = hubBarCode(hubUrl());
+    var done = function () { toast("Copied — now do step 2"); };
+    if (navigator.clipboard) navigator.clipboard.writeText(code).then(done, fallback);
+    else fallback();
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      ta.remove();
+      done();
+    }
+  };
+})();
+</script>
+</body>
+</html>
