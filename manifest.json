@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "HUB",
+  "version": "1.0",
+  "description": "Your home screen of links. Websites open inside the hub instead of new tabs.",
+  "action": { "default_title": "Open HUB" },
+  "background": { "service_worker": "background.js" },
+  "permissions": ["declarativeNetRequestWithHostAccess", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [{
+    "matches": ["https://*/*"],
+    "js": ["inhub.js"],
+    "all_frames": true,
+    "run_at": "document_start",
+    "world": "MAIN"
+  }, {
+    "matches": ["https://login.microsoftonline.com/*", "https://login.live.com/*"],
+    "js": ["msframe.js"],
+    "all_frames": true,
+    "run_at": "document_start",
+    "world": "MAIN"
+  }]
+}
